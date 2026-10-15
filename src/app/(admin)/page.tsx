@@ -52,19 +52,31 @@ export default function DashboardPage(): React.JSX.Element {
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <StatCard icon={Users} color="blue" label="Total Users" value={stats.totalUsers} />
+          <StatCard
+            icon={Users}
+            color="blue"
+            label="Total Users"
+            value={stats.totalUsers}
+            href="/users"
+          />
           <StatCard
             icon={MessageSquare}
             color="purple"
             label="Community Posts"
             value={stats.totalPosts}
+            href="/community-posts"
           />
           <StatCard
             icon={EyeOff}
             color="red"
             label="Hidden Posts (needs review)"
             value={stats.hiddenPosts}
-            badgeLabel={stats.hiddenPosts > 0 ? `${stats.hiddenPosts} need review` : undefined}
+            badgeLabel={
+              stats.hiddenPosts > 0
+                ? `${stats.hiddenPosts} ${stats.hiddenPosts === 1 ? 'needs' : 'need'} review`
+                : undefined
+            }
+            href="/moderation"
           />
           <StatCard
             icon={MapPin}
@@ -74,19 +86,28 @@ export default function DashboardPage(): React.JSX.Element {
             badgeLabel={
               stats.pendingUnsafeAreas > 0 ? `${stats.pendingUnsafeAreas} pending` : undefined
             }
+            href="/unsafe-areas?filter=pending"
           />
           <StatCard
             icon={AlertTriangle}
             color="red"
             label="Open Incidents"
             value={stats.openIncidents}
+            href="/incidents"
           />
-          <StatCard icon={Scale} color="blue" label="Published Laws" value={stats.publishedLaws} />
+          <StatCard
+            icon={Scale}
+            color="blue"
+            label="Published Laws"
+            value={stats.publishedLaws}
+            href="/content?tab=laws"
+          />
           <StatCard
             icon={Newspaper}
             color="purple"
             label="Published News"
             value={stats.publishedNews}
+            href="/content?tab=news"
           />
         </div>
       )}

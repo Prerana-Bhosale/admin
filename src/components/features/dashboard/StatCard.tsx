@@ -1,4 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
+import Link from 'next/link';
 
 import { Card, CardContent } from '@/components/ui/Card';
 import { cn } from '@/lib/utils';
@@ -11,6 +12,7 @@ export interface StatCardProps {
   label: string;
   value: number;
   badgeLabel?: string;
+  href?: string;
 }
 
 const COLOR_CLASSES: Record<StatCardColor, string> = {
@@ -33,8 +35,9 @@ export function StatCard({
   label,
   value,
   badgeLabel,
+  href,
 }: StatCardProps): React.JSX.Element {
-  return (
+  const card = (
     <Card>
       <CardContent className="flex items-start justify-between">
         <div>
@@ -53,5 +56,18 @@ export function StatCard({
         ) : null}
       </CardContent>
     </Card>
+  );
+
+  if (!href) {
+    return card;
+  }
+
+  return (
+    <Link
+      href={href}
+      className="block rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-shakti-purple focus-visible:ring-offset-2"
+    >
+      {card}
+    </Link>
   );
 }
