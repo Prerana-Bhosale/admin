@@ -11,6 +11,7 @@ const STATUS_VARIANT: Record<string, BadgeVariant> = {
   pending: 'warning',
   approved: 'success',
   hidden: 'error',
+  rejected: 'error',
 };
 
 const STATUS_LABEL: Record<string, string> = {
@@ -23,6 +24,7 @@ const STATUS_LABEL: Record<string, string> = {
   pending: 'Pending',
   approved: 'Approved',
   hidden: 'Hidden',
+  rejected: 'Rejected',
 };
 
 export interface StatusBadgeProps {
