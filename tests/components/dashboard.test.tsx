@@ -52,6 +52,36 @@ describe('Dashboard recent incidents query', () => {
     render(<DashboardPage />);
   }
 
+  it('shows a loading indicator without an empty-state message while incidents are loading', (): void => {
+    mockRecentIncidentsQuery.mockReturnValue({
+      data: undefined,
+      isLoading: true,
+      isError: false,
+      refetch: mockRefetch,
+    });
+
+    const { container } = render(<DashboardPage />);
+
+    expect(container.querySelector('.animate-spin')).not.toBeNull();
+    expect(screen.queryByText('No open incidents.')).toBeNull();
+    expect(screen.queryByRole('alert')).toBeNull();
+  });
+
+  it('shows the empty state after a successful response with no open incidents', (): void => {
+    mockRecentIncidentsQuery.mockReturnValue({
+      data: [],
+      isLoading: false,
+      isError: false,
+      refetch: mockRefetch,
+    });
+
+    renderDashboard();
+
+    expect(screen.getByText('No open incidents.')).not.toBeNull();
+    expect(screen.queryByRole('alert')).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Retry' })).toBeNull();
+  });
+
   it('shows an error and retry action instead of an empty state when the incidents API fails', async (): Promise<void> => {
     renderDashboard();
 
